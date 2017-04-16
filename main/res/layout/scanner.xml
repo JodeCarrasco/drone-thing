@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.jode.donething.activity.ScanLoopActivity"
+    android:id="@+id/piloting_view">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="70dp"
+        android:text="Battery: "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#ff0000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="XXX%"
+        android:id="@+id/batteryLabel"
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft="90dp"
+        android:textColor="#ff0000" />
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:id="@+id/appBarLayout">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <Button
+        android:id="@+id/emergencyBt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom|left"
+        android:width="150dp"
+        android:text="Emergency"
+        app:layout_anchor="@+id/videoView"
+        app:layout_anchorGravity="top|right" />
+
+    <TextView
+        android:id="@+id/fab_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/fab"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="40dp"
+        android:text="Start Scan Cycle" />
+
+    <com.example.jode.donething.view.BebopVideoView
+        android:id="@+id/videoView"
+        android:layout_width="500dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="90dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="80dp"
+        android:width="850dp"
+        android:text="Start Scan"
+        app:backgroundTint="@android:color/holo_green_light"
+        app:rippleColor="@color/primary_text"
+        app:srcCompat="@android:drawable/ic_menu_search" />
+
+
+</android.support.design.widget.CoordinatorLayout>
