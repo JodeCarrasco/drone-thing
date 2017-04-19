@@ -28,19 +28,20 @@ import com.example.jode.donething.view.BebopVideoView;
  */
 public class BebopActivity extends AppCompatActivity {
     private static final String TAG = "BebopActivity";
-    private BebopDrone mBebopDrone;
+    public static final String SCAN_DEVICE_SERVICE = "SCAN_DEVICE_SERVICE";
+    protected BebopDrone mBebopDrone;
 
-    private ProgressDialog mConnectionProgressDialog;
-    private ProgressDialog mDownloadProgressDialog;
+    protected ProgressDialog mConnectionProgressDialog;
+    protected ProgressDialog mDownloadProgressDialog;
 
-    private BebopVideoView mVideoView;
+    protected BebopVideoView mVideoView;
 
-    private TextView mBatteryLabel;
-    private Button mTakeOffLandBt;
-    private Button mDownloadBt;
+    protected TextView mBatteryLabel;
+    protected Button mTakeOffLandBt;
+    protected Button mDownloadBt;
 
-    private int mNbMaxDownload;
-    private int mCurrentDownloadIndex;
+    protected int mNbMaxDownload;
+    protected int mCurrentDownloadIndex;
 
     public static final String BEBOP = "com.example.jode.donething.XFER_DRONE";
 
@@ -67,6 +68,7 @@ public class BebopActivity extends AppCompatActivity {
         ARDiscoveryDeviceService service = intent.getParcelableExtra(DeviceListActivity.EXTRA_DEVICE_SERVICE);
 
         // Initializes the pilot display
+        initRequired();
         initIHM();
 
         // BebopDrone object created
@@ -157,9 +159,8 @@ public class BebopActivity extends AppCompatActivity {
      * I have altered this code from the sample SDK
      *
      */
-    private void initIHM() {
-        mVideoView = (BebopVideoView) findViewById(R.id.videoView); // Main video screen in pilot view
 
+    protected void initRequired(){
         // Defines the Emergency button, which cuts the rotors instantly
         findViewById(R.id.emergencyBt).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -187,6 +188,15 @@ public class BebopActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // The label for the battery indicator
+        mBatteryLabel = (TextView) findViewById(R.id.batteryLabel);
+    }
+
+    private void initIHM() {
+        mVideoView = (BebopVideoView) findViewById(R.id.videoView); // Main video screen in pilot view
+
+
 
         // Defines the take picture button.
         findViewById(R.id.takePictureBt).setOnClickListener(new View.OnClickListener() {
@@ -222,27 +232,14 @@ public class BebopActivity extends AppCompatActivity {
         findViewById(R.id.start_scanBt).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                // Declares intent to go from this class to ScanLoopActivity class
+/*                mBebopDrone.flip();
+
+                mBebopDrone.timeYaw((byte)-20, 700);
+                mBebopDrone.timeYaw((byte)50, 300);
+                mBebopDrone.timeYaw((byte)-5, 2000);
+*/
                 Intent intent = new Intent(BebopActivity.this, ScanLoopActivity.class);
-                // "Cloning" the service used by the drone object in order to pass it onto Scan Activity
-                ARDiscoveryDeviceService service1 = mBebopDrone.getService();
-                // Send the service to the Scan Activity
-                intent.putExtra(BEBOP, service1);
-                // START activity
                 startActivity(intent);
-
-                //mBebopDrone.autoYaw((byte)-20, 50);
-
-                //mBebopDrone.mover((float)0.25, (float) 90);
-                //mBebopDrone.setTime(500);
-
-                //mBebopDrone.setYaw((byte) 0);
-
-                //mBebopDrone.setRoll((byte) 50);
-                //mBebopDrone.setFlag((byte) 1);
-
-                //mBebopDrone.setFlag((byte) 0);
-
 
             }
         });
@@ -453,8 +450,6 @@ public class BebopActivity extends AppCompatActivity {
             }
         });
 
-        // The label for the battery indicator
-        mBatteryLabel = (TextView) findViewById(R.id.batteryLabel);
     }
 
     /**
@@ -469,7 +464,7 @@ public class BebopActivity extends AppCompatActivity {
      * From the sample SDK. I have commented for clarity.
      *
      */
-    private final BebopDrone.Listener mBebopListener = new BebopDrone.Listener() {
+    protected final BebopDrone.Listener mBebopListener = new BebopDrone.Listener() {
         // Checks to make sure device connection is still active.
         @Override
         public void onDroneConnectionChanged(ARCONTROLLER_DEVICE_STATE_ENUM state) {
