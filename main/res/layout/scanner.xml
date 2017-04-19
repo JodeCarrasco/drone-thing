@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,15 +7,16 @@
     tools:context="com.example.jode.donething.activity.ScanLoopActivity"
     android:id="@+id/piloting_view">
 
+    <!-- The following items defined in parent class -->
     <TextView
-        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Battery: "
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="70dp"
-        android:text="Battery: "
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#ff0000" />
 
     <TextView
@@ -24,65 +25,121 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="XXX%"
         android:id="@+id/batteryLabel"
-        android:layout_marginTop="70dp"
-        android:layout_marginLeft="90dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/textView"
+        android:layout_toEndOf="@+id/textView"
         android:textColor="#ff0000" />
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        android:id="@+id/appBarLayout">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
 
     <Button
-        android:id="@+id/emergencyBt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Emergency"
+        android:id="@+id/emergencyBt"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_gravity="bottom|left"
-        android:width="150dp"
-        android:text="Emergency"
-        app:layout_anchor="@+id/videoView"
-        app:layout_anchorGravity="top|right" />
+        android:width="150dp"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/takeOffOrLandBt"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:width="150dp"/>
+
+    <!-- The following items defined in ScanLoopActivity -->
     <TextView
         android:id="@+id/fab_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/fab"
+        android:layout_alignBottom="@+id/Scan"
         android:layout_centerHorizontal="true"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="40dp"
         android:text="Start Scan Cycle" />
 
-    <com.example.jode.donething.view.BebopVideoView
-        android:id="@+id/videoView"
-        android:layout_width="500dp"
-        android:layout_height="250dp"
-        android:layout_marginTop="90dp" />
+    <Button
+        android:id="@+id/flipBt"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/emergencyBt"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:text="Button" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="80dp"
-        android:width="850dp"
-        android:text="Start Scan"
-        app:backgroundTint="@android:color/holo_green_light"
-        app:rippleColor="@color/primary_text"
-        app:srcCompat="@android:drawable/ic_menu_search" />
+    <Button
+        android:id="@+id/roll_L_slowBt"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/flipBt"
+        android:layout_alignStart="@+id/flipBt"
+        android:layout_below="@+id/flipBt"
+        android:layout_marginTop="10dp"
+        android:text="Roll Left Slow" />
+
+    <Button
+        android:id="@+id/roll_R_midBt"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/roll_L_slowBt"
+        android:layout_alignStart="@+id/roll_L_slowBt"
+        android:layout_below="@+id/roll_L_slowBt"
+        android:layout_marginTop="10dp"
+        android:text="Roll Right Mid" />
+
+    <Button
+        android:id="@+id/roll_zeroBt"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/roll_R_midBt"
+        android:layout_alignStart="@+id/roll_R_midBt"
+        android:layout_below="@+id/roll_R_midBt"
+        android:layout_marginTop="10dp"
+        android:text="Roll Zero" />
+
+    <Button
+        android:id="@+id/yaw_L_slowBt"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/roll_zeroBt"
+        android:layout_alignStart="@+id/roll_zeroBt"
+        android:layout_below="@+id/roll_zeroBt"
+        android:layout_marginTop="10dp"
+        android:text="Yaw Left Slow" />
+
+    <Button
+        android:id="@+id/yaw_R_midBt"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/yaw_L_slowBt"
+        android:layout_alignStart="@+id/yaw_L_slowBt"
+        android:layout_below="@+id/yaw_L_slowBt"
+        android:layout_marginTop="10dp"
+        android:text="Yaw Right Mid" />
+
+    <Button
+        android:id="@+id/yaw_zeroBt"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/yaw_R_midBt"
+        android:layout_alignStart="@+id/yaw_R_midBt"
+        android:layout_below="@+id/yaw_R_midBt"
+        android:layout_marginTop="10dp"
+        android:text="Yaw Zero" />
+
+    <Button
+        android:id="@+id/homeBt"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="200dp"
+        android:layout_marginStart="200dp"
+        android:layout_toEndOf="@+id/takeOffOrLandBt"
+        android:layout_toRightOf="@+id/takeOffOrLandBt"
+        android:text="Home" />
 
 
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>
