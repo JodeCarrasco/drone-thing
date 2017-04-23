@@ -5,8 +5,10 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.parrot.arsdk.arcommands.ARCOMMANDS_ARDRONE3_ANIMATIONS_FLIP_DIRECTION_ENUM;
 import com.parrot.arsdk.arcommands.ARCOMMANDS_ARDRONE3_MEDIARECORDEVENT_PICTUREEVENTCHANGED_ERROR_ENUM;
 import com.parrot.arsdk.arcommands.ARCOMMANDS_ARDRONE3_PILOTINGSTATE_FLYINGSTATECHANGED_STATE_ENUM;
+import com.parrot.arsdk.arcommands.ARCOMMANDS_ARDRONE3_PILOTING_CIRCLE_DIRECTION_ENUM;
 import com.parrot.arsdk.arcontroller.ARCONTROLLER_DEVICE_STATE_ENUM;
 import com.parrot.arsdk.arcontroller.ARCONTROLLER_DICTIONARY_KEY_ENUM;
 import com.parrot.arsdk.arcontroller.ARCONTROLLER_ERROR_ENUM;
@@ -279,6 +281,22 @@ public class BebopDrone {
     }
 
     /**
+     * Set the forward/backward angle of the drone for a set amount of time (milliseconds)
+     * Note that {@link BebopDrone#setFlag(byte)} should be set to 1 in order to take in account the pitch value
+     * @param pitch value in percentage from -100 to 100
+     */
+    public void timePitch(byte pitch, int time) {
+        if ((mDeviceController != null) && (mState.equals(ARCONTROLLER_DEVICE_STATE_ENUM.ARCONTROLLER_DEVICE_STATE_RUNNING))) {
+            mDeviceController.getFeatureARDrone3().setPilotingPCMDPitch(pitch);
+            try{
+                Thread.sleep(time);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
      * Set the side angle of the drone
      * Note that {@link BebopDrone#setFlag(byte)} should be set to 1 in order to take in account the roll value
      * @param roll value in percentage from -100 to 100
@@ -290,12 +308,44 @@ public class BebopDrone {
     }
 
     /**
+     * Set the side angle of the drone for a set amount of time in milliseconds
+     * Note that {@link BebopDrone#setFlag(byte)} should be set to 1 in order to take in account the roll value
+     * @param roll value in percentage from -100 to 100
+     */
+    public void timeRoll(byte roll, int time) {
+        if ((mDeviceController != null) && (mState.equals(ARCONTROLLER_DEVICE_STATE_ENUM.ARCONTROLLER_DEVICE_STATE_RUNNING))) {
+            mDeviceController.getFeatureARDrone3().setPilotingPCMDRoll(roll);
+            try{
+                Thread.sleep(time);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
      * Set the heading rotation speed of the drone
      * @param yaw value in percentage from -100 to 100
      */
     public void setYaw(byte yaw) {
         if ((mDeviceController != null) && (mState.equals(ARCONTROLLER_DEVICE_STATE_ENUM.ARCONTROLLER_DEVICE_STATE_RUNNING))) {
             mDeviceController.getFeatureARDrone3().setPilotingPCMDYaw(yaw);
+
+        }
+    }
+
+    /**
+     * Set the heading rotation speed of the drone
+     * @param yaw value in percentage from -100 to 100
+     */
+    public void timeYaw(byte yaw, int time) {
+        if ((mDeviceController != null) && (mState.equals(ARCONTROLLER_DEVICE_STATE_ENUM.ARCONTROLLER_DEVICE_STATE_RUNNING))) {
+            mDeviceController.getFeatureARDrone3().setPilotingPCMDYaw(yaw);
+            try{
+                Thread.sleep(time);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -310,6 +360,21 @@ public class BebopDrone {
     }
 
     /**
+     * Set the vertical ascent/descent speed of the drone for a set amount of time in milliseconds
+     * @param gaz value in percentage from -100 to 100
+     */
+    public void timeGaz(byte gaz, int time) {
+        if ((mDeviceController != null) && (mState.equals(ARCONTROLLER_DEVICE_STATE_ENUM.ARCONTROLLER_DEVICE_STATE_RUNNING))) {
+            mDeviceController.getFeatureARDrone3().setPilotingPCMDGaz(gaz);
+            try{
+                Thread.sleep(time);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
      * Take in account or not the pitch and roll values
      * @param flag 1 if the pitch and roll values should be used, 0 otherwise
      */
@@ -319,23 +384,41 @@ public class BebopDrone {
         }
     }
 
-    public void setTime(int time) {
+    public void goHome() {
         if((mDeviceController != null) && (mState.equals(ARCONTROLLER_DEVICE_STATE_ENUM.ARCONTROLLER_DEVICE_STATE_RUNNING))) {
-            mDeviceController.getFeatureARDrone3().setPilotingPCMDTimestampAndSeqNum(time);
+            mDeviceController.getFeatureARDrone3().sendPilotingNavigateHome((byte)1);
         }
     }
 
-    public void autoYaw(byte yaw, int time) {
+    public void dance(byte flag, byte roll, byte pitch, byte yaw, byte gaz, int time) {
         if((mDeviceController != null) && (mState.equals(ARCONTROLLER_DEVICE_STATE_ENUM.ARCONTROLLER_DEVICE_STATE_RUNNING))) {
-            mDeviceController.getFeatureARDrone3().setPilotingPCMD((byte) 0, (byte) 0,(byte) 0, yaw,(byte) 0, time);
+            mDeviceController.getFeatureARDrone3().setPilotingPCMD(flag, roll, pitch, yaw, gaz, 0);
+            try{
+                Thread.sleep(time);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void mover(float z, float head) {
+    public void mover(float y, float head) {
         if((mDeviceController != null) && (mState.equals(ARCONTROLLER_DEVICE_STATE_ENUM.ARCONTROLLER_DEVICE_STATE_RUNNING))) {
-            mDeviceController.getFeatureARDrone3().sendPilotingMoveBy(0,0,z,head);
+            mDeviceController.getFeatureARDrone3().sendPilotingMoveBy(0,y,0,head);
         }
     }
+
+    public void circle(){
+        if((mDeviceController != null) && (mState.equals(ARCONTROLLER_DEVICE_STATE_ENUM.ARCONTROLLER_DEVICE_STATE_RUNNING))){
+            mDeviceController.getFeatureARDrone3().sendPilotingCircle(ARCOMMANDS_ARDRONE3_PILOTING_CIRCLE_DIRECTION_ENUM.ARCOMMANDS_ARDRONE3_PILOTING_CIRCLE_DIRECTION_CCW);
+        }
+    }
+
+    public void flip() {
+        if((mDeviceController != null) && (mState.equals(ARCONTROLLER_DEVICE_STATE_ENUM.ARCONTROLLER_DEVICE_STATE_RUNNING))) {
+            mDeviceController.getFeatureARDrone3().sendAnimationsFlip(ARCOMMANDS_ARDRONE3_ANIMATIONS_FLIP_DIRECTION_ENUM.ARCOMMANDS_ARDRONE3_ANIMATIONS_FLIP_DIRECTION_BACK);
+        }
+    }
+
 
     /**
      * Download the last flight medias
