@@ -3,10 +3,12 @@ package com.example.jode.donething.activity;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.jode.donething.R;
 import com.example.jode.donething.drone.BebopDrone;
@@ -15,7 +17,6 @@ import com.parrot.arsdk.arcommands.ARCOMMANDS_ARDRONE3_PILOTINGSTATE_FLYINGSTATE
 import com.parrot.arsdk.arcontroller.ARCONTROLLER_DEVICE_STATE_ENUM;
 import com.parrot.arsdk.arcontroller.ARControllerCodec;
 import com.parrot.arsdk.arcontroller.ARFrame;
-import com.parrot.arsdk.ardiscovery.ARDiscoveryDeviceService;
 
 
 /*
@@ -37,7 +38,8 @@ public class ScanLoopActivity extends BebopActivity {
 
     //private FloatingActionButton fab;
 
-    @Override
+
+    /*@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scanner);
@@ -82,7 +84,7 @@ public class ScanLoopActivity extends BebopActivity {
         mBebopScan.dispose();
         super.onDestroy();
     }
-
+*/
     private void initScan() {
 
 

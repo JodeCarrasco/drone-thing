@@ -269,6 +269,22 @@ public class BebopDrone {
         }
     }
 
+    public void videoOnOff(byte toggle) {
+        if ((mDeviceController != null) && (mState.equals(ARCONTROLLER_DEVICE_STATE_ENUM.ARCONTROLLER_DEVICE_STATE_RUNNING))) {
+            mDeviceController.getFeatureARDrone3().sendMediaStreamingVideoEnable(toggle);
+        }
+    }
+
+    public void flatTrim() {
+        if ((mDeviceController != null) && (mState.equals(ARCONTROLLER_DEVICE_STATE_ENUM.ARCONTROLLER_DEVICE_STATE_RUNNING))) {
+            mDeviceController.getFeatureARDrone3().sendPilotingFlatTrim();
+        }
+    }
+
+    public void setRotateSpeed(float speed){
+        mDeviceController.getFeatureARDrone3().sendPilotingSettingsSetAutonomousFlightMaxRotationSpeed(speed);
+    }
+
     /**
      * Set the forward/backward angle of the drone
      * Note that {@link BebopDrone#setFlag(byte)} should be set to 1 in order to take in account the pitch value

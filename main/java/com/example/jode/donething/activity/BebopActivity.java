@@ -232,18 +232,19 @@ public class BebopActivity extends AppCompatActivity {
         findViewById(R.id.start_scanBt).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
- //               mBebopDrone.timeGaz((byte) 20, 80);
 
-                //mBebopDrone.circle();
-                for(int i = 0; i<12; i++) {
-                    mBebopDrone.setFlag((byte)1);
-                    mBebopDrone.timeRoll((byte)20, 3000);
-                    mBebopDrone.setRoll((byte)0);
-                    mBebopDrone.setFlag((byte)0);
-                    mBebopDrone.timeYaw((byte)-20, 2000);
-                    mBebopDrone.setYaw((byte)0);
+                mBebopDrone.videoOnOff((byte)0);
 
+                mBebopDrone.setRotateSpeed(45);
+                for(int i = 0; i < 8; i++) {
+                    mBebopDrone.timeYaw((byte)50,1000);
+                    mBebopDrone.timeYaw((byte)0,500);
+                    mBebopDrone.flatTrim();
+                    mBebopDrone.takePicture();
                 }
+                mBebopDrone.setYaw((byte)0);
+                mBebopDrone.flatTrim();
+                mBebopDrone.videoOnOff((byte)1);
 
 /*
                 Intent intent = new Intent(BebopActivity.this, ScanLoopActivity.class);
@@ -251,6 +252,7 @@ public class BebopActivity extends AppCompatActivity {
 */
             }
         });
+
         //HomeButton
         findViewById(R.id.homeBt).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
